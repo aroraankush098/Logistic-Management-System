@@ -1,0 +1,316 @@
+#include<bits/stdc++.h>
+#include <cctype>
+#include<windows.h>
+using namespace std;
+void intro()
+{
+
+
+    system("color 0a");
+
+    string str = " ALGORITHM AND PROBLEM SOLVING LAB ";
+    string str2 = " MINI PROJECT (PBL) ";
+
+    cout<< "\n\n\n\t\t\t\t\t--------------------------------------------" <<endl;
+    cout<< "\t\t\t\t\t\t";
+
+    for (int i = 0; i<str.length(); i++)
+    {
+        Sleep(2);
+        cout<< str[i];
+    }
+
+    cout<< "\n\t\t\t\t\t\t  ";
+
+    for (int i = 0; i< str2.length(); i++)
+    {
+        Sleep(2);
+        cout<< str2[i];
+    }
+    cout<< "\n\t\t\t\t\t--------------------------------------------" <<endl;
+
+    Sleep(2);
+
+    string top = "\n\tTOPIC : SHORTEST DISTANCE BETWEEN TWO CITIES USING DIJKSTRA 'S ALGORITHM ";
+
+    for (int i = 0; i<top.length(); i++)
+    {
+        Sleep(2);
+        cout<< top[i];
+    }
+
+    cout<< "\n\t-------------------------------\n"
+        <<endl;
+
+    string crt = "\tCREATED & DEVELOPED BY : ";
+
+    for (int i = 0; i<crt.length(); i++)
+    {
+        Sleep(2);
+        cout<<crt[i];
+    }
+    cout<< "\n\t------------------------- \n"
+        <<endl;
+    string name_s = "\t1. ANKUSH KUMAR (9921103160)\n\t2. PRIYANSHU AGARWAL (9921103230)\n\t3. ADWITYA MANI TRIPATHI (9921103222)\n\t4. GARVIT SHARMA (9921103147)\n ";
+
+    for (int i = 0; i<name_s.length(); i++)
+    {
+        Sleep(2);
+        cout<<name_s[i];
+    }
+    Sleep(2);
+
+    system("pause");
+    system("cls");
+}
+int shhort(unordered_map<string, vector<pair<string, int> > > adj, string src, string dest,double speed,string strg)
+{
+
+
+    if(adj.find(src)!=adj.end())
+    {
+        if(adj.find(dest)!=adj.end())
+        {
+            priority_queue<pair<int,string >, vector<pair<int, string>>, greater<pair<int,string>>> pq;
+            unordered_map<string,int> dist;
+            unordered_map<string,string> parent;
+
+            // Initialize dist with large value and parent with empty string
+            for (auto it : adj)
+            {
+                string node = it.first;
+                dist[node] = 1e9;
+                parent[node] = "";
+            }
+
+            dist[src] = 0;
+
+            // Push the source node to the queue.
+            pq.push({0, src});
+
+            while (!pq.empty())
+            {
+                // Topmost element of the priority queue is with minimum distance value.
+                auto it = pq.top();
+                pq.pop();
+                string node = it.second;
+                int dis = it.first;
+                for (auto it : adj[node])
+                {
+                    string adjNode = it.first;
+                    int edW = it.second;
+                    if (dis + edW < dist[adjNode])
+                    {
+                        dist[adjNode] = dis + edW;
+                        pq.push({dist[adjNode], adjNode});
+                        parent[adjNode] = node;
+                    }
+                }
+            }
+
+            // If distance to a node could not be found, we are returning an array containing -1.
+            if (dist[dest] == 1e9)
+            {
+                cout << "No path found" << endl;
+                return -1;
+            }
+
+            // Store the final path in the ‘path’ array.
+            vector<string> path;
+            string node = dest;
+            int distance=0;
+            while (parent[node] != "")
+            {
+                path.push_back(node);
+                distance=distance + dist[node];
+                node = parent[node];
+            }
+            path.push_back(src);
+
+            // As the path stored is in a reverse order, we reverse the array
+
+            reverse(path.begin(), path.end());
+            int zi=dist[dest];
+
+            int k=path.size()-1;
+            cout<<strg;
+            for(int i=0; i<k; i++)
+            {
+                cout<<path[i]<<"->";
+            }
+            cout<<path[k];
+            return zi;
+
+        }
+        cout<<"SORRY This City is not present in our Database. We are working on it and Update the version very Shortly."<<endl<<endl;
+        return -1;
+    }
+    else
+    {
+        cout<<"SORRY This City is not present in our Database. We are working on it and Update the version very Shortly."<<endl<<endl;
+        return -1;
+    }
+}
+
+int main()
+{
+    // Graph with 5 nodes and 6 edges
+    string final1="Shortest Time Path: ";
+    string final2="Shortest Distance Path: ";
+    srand(time(0));
+
+    int a[92];
+    intro();
+    string src,dest;
+    int speed,i;
+
+    unordered_map<string, vector<pair<string, int>>> graph;
+    cout<<endl;
+    cout<<"WELCOME TO THE LOGISTIC COMPANY "<<endl<<endl;
+label:
+
+    cout<<"Enter the Source: ";
+    cin>>src;
+    cout<<endl;
+    cout<<"Enter Destination: ";
+    cin>>dest;
+    cout<<endl;
+    cout<<"Enter the Speed of Your Vehicle in Km/Hr: ";
+    cin>>speed;
+    cout<<endl;
+    for(int i=0;i<src.size();i++)
+    {
+    src[i]= toupper(src[i]);
+    }
+    for(int i=0;i<dest.size();i++)
+    {
+
+    dest[i]= toupper(dest[i]);
+    }
+    if(speed>0)
+    {
+        cout<<"Please select an option from following: "<<endl;
+        cout<<"Press 1 for Shortest Time Path"<<endl;
+        cout<<"Press 2 for Shortest Distance Path"<<endl;
+        cout<<"Press 3 for exit"<<endl;
+        cin>>i;
+
+        switch(i)
+        {
+        case 1:
+        {
+            for(int i=0; i<92; i++)
+            {
+                a[i]=200 + rand()%1000;
+            }
+            graph["HISAR"] = {{"HANSI", 25 + a[1]}};
+            graph["HANSI"] = {{"HISAR", 25+ a[1]}, {"NOIDA", 180+ a[3]},{"PALWAL",350+ a[4]},{"ROHTAK",50+ a[5]},{"AGRA",210+ a[89]}};
+            graph["ROHTAK"] = {{"HANSI", 50+ a[5]}, {"BAHADURGARH", 80+ a[7]},{"MURADABAD",70+ a[8]},{"KANPUR",300+ a[90]}};
+            graph["BAHADURGARH"] = {{"ROHTAK", 80+ a[7]},{"PALWAL",90+ a[11]},{"DELHI",40+ a[9]},{"VRINDAVAN",200+ a[10]}};
+            graph["DELHI"] = {{"BAHADURGARH",40+ a[9]},{"LUCKNOW",50+ a[14]}};
+            graph["AGRA"] = {{"NOIDA", 180+ a[15]}, {"KANPUR", 50+ a[16]},{"MATHURA",120+ a[17]},{"HANSI",210 + a[89]}};
+            graph["KANPUR"] = {{"AGRA", 50+ a[16]}, {"MURADABAD", 30+ a[19]},{"ROHTAK",300+ a[90]}};
+            graph["MURADABAD"] = {{"KANPUR", 30+ a[19]}, {"ROHTAK", 70+ a[8]},{"SITAPUR", 90+ a[22]}, {"MATHURA", 190+ a[23]},{"PALWAL", 80+ a[24]}, {"KANNAUJ", 98+ a[25]}};
+            graph["SITAPUR"] = {{"MURADABAD", 90+ a[22]},{"LUCKNOW",70+ a[27]}};
+            graph["LUCKNOW"] = {{"DELHI",50+ a[14]},{"SITAPUR",70+ a[27]},{"KANNAUJ",200+ a[30]}};
+            graph["NOIDA"] = {{"AGRA", 180+ a[15]}, {"HANSI", 180+ a[3]},{"GHAZIABAD",20+ a[33]},{"GURGAON",145+ a[34]}};
+            graph["MATHURA"] = {{"AGRA", 120+ a[17]}, {"MURADABAD", 190+ a[23]},{"GHAZIABAD",118+ a[37]},{"GURGAON",45+ a[38]},{"ALIGARH",50+ a[39]},{"PALWAL",140+ a[88]}};
+            graph["PALWAL"] = {{"HANSI", 350+ a[4]},{"BAHADURGARH",90+ a[11]},{"GURGAON",104+ a[42]},{"FARIDABAD",40+ a[43]},{"MURADABAD",80+ a[24]},{"MATHURA",140+ a[88]}};
+            graph["KANNAUJ"] = {{"MURADABAD",98+ a[25]},{"LUCKNOW",200+ a[30]},{"ALIGARH",69+ a[47]},{"ETAWAH",78+ a[48]}};
+            graph["VRINDAVAN"] = {{"BAHADURGARH", 200+ a[10]}, {"FARIDABAD", 110+ a[50]}};
+            graph["GHAZIABAD"] = {{"NOIDA", 20+ a[33]}, {"MATHURA", 118+ a[37]},{"GWALIOR",330+ a[53]},{"GURGAON",70+ a[86]}};
+            graph["GURGAON"] = {{"NOIDA", 145+ a[34]},{"MATHURA",45+ a[38]},{"PALWAL",104+ a[42]},{"AMRITSAR",190+ a[57]},{"GWALIOR",50+ a[58]},{"JHANSI",70+ a[59]},{"GHAZIABAD",70+ a[86]}};
+            graph["ALIGARH"] = {{"MATHURA",50+ a[39]},{"KANNAUJ",69+ a[47]},{"GWALIOR",60+ a[62]},{"VADODARA",130+ a[63]}};
+            graph["FARIDABAD"] = {{"PALWAL", 40+ a[43]}, {"VRINDAVAN", 110+ a[50]},{"JHANSI",150+ a[66]},{"VADODARA",80+ a[67]},{"BURARI",250+ a[68]}};
+            graph["ETAWAH"] = {{"KANNAUJ", 78+ a[48]}, {"BURARI", 180+ a[70]},{"VADODARA",90+ a[71]}};
+            graph["AMRITSAR"] = {{"GURGAON", 190+ a[57]}};
+            graph["GWALIOR"] = {{"GHAZIABAD",330+ a[53]},{"GURGAON",50+ a[58]},{"ALIGARH",60+ a[62]},{"JHANSI",40+ a[83]}};
+            graph["JHANSI"] = {{"GURGAON", 70+ a[59]}, {"FARIDABAD", 150+ a[66]},{"GWALIOR",40+ a[83]}};
+            graph["VADODARA"] = {{"ALIGARH", 130+ a[63]}, {"FARIDABAD", 80+ a[67]},{"ETAWAH",90+ a[71]}};
+            graph["BURARI"] = {{"FARIDABAD", 250+ a[68]}, {"ETAWAH", 180+ a[70]}};
+
+            cout<<endl;
+            double f=shhort(graph,src,dest,speed,final1);
+            if(f>0)
+            {
+                double z=(f/speed);
+                int zi=ceil(z);
+                cout<<endl;
+
+
+                cout<<"And it will Take Around: "<<zi<<" Hours"<<endl<<endl;
+            }
+            else
+            {
+                cout<<"\nShortest Time Path: "<<f<<endl<<endl;
+            }
+            //system("pause");
+            //system("cls");
+            goto label;
+        }
+        case 2:
+        {
+            graph["HISAR"] = {{"HANSI", 25}};
+            graph["HANSI"] = {{"HISAR", 25}, {"NOIDA", 180},{"PALWAL",150},{"ROHTAK",50}};
+            graph["ROHTAK"] = {{"HANSI", 50}, {"BAHADURGARH", 80},{"MURADABAD",70}};
+            graph["BAHADURGARH"] = {{"ROHTAK", 80},{"PALWAL",90},{"DELHI",40},{"VRINDAVAN",200}};
+            graph["DELHI"] = {{"BAHADURGARH",40},{"LUCKNOW",550}};
+            graph["AGRA"] = {{"NOIDA", 180}, {"KANPUR", 50},{"MATHURA",120}};
+            graph["KANPUR"] = {{"AGRA", 50}, {"MURADABAD", 30}};
+            graph["MURADABAD"] = {{"KANPUR", 30}, {"ROHTAK", 70},{"SITAPUR", 90}, {"MATHURA", 190},{"PALWAL", 80}, {"KANNAUJ", 98}};
+            graph["SITAPUR"] = {{"MURADABAD", 90},{"LUCKNOW",70}};
+            graph["LUCKNOW"] = {{"DELHI",550},{"SITAPUR",70},{"KANNAUJ",200}};
+            graph["NOIDA"] = {{"AGRA", 180}, {"HANSI", 180},{"GHAZIABAD",20},{"GURGAON",145}};
+            graph["MATHURA"] = {{"AGRA", 120}, {"MURADABAD", 190},{"GHAZIABAD",118},{"GURGAON",45},{"ALIGARH",50}};
+            graph["PALWAL"] = {{"HANSI", 150},{"BAHADURGARH",90},{"GURGAON",104},{"FARIDABAD",40},{"MURADABAD",80}};
+           
+
+ graph["KANNAUJ"] = {{"MURADABAD",98},{"LUCKNOW",200},{"ALIGARH",69},{"ETAWAH",78}};
+            graph["VRINDAVAN"] = {{"BAHADURGARH", 200}, {"FARIDABAD", 110}};
+            graph["GHAZIABAD"] = {{"NOIDA", 20}, {"MATHURA", 118},{"GWALIOR",330}};
+            graph["GURGAON"] = {{"NOIDA", 145},{"MATHURA",45},{"PALWAL",104},{"AMRITSAR",190},{"GWALIOR",50},{"JHANSI",70}};
+            graph["ALIGARH"] = 
+
+{{"MATHURA",50},{"KANNAUJ",69},{"GWALIOR",60},{"VADODARA",130}};
+            graph["FARIDABAD"] = {{"PALWAL", 40}, {"VRINDAVAN", 110},{"JHANSI",150},{"VADODARA",80},{"BURARI",250}};
+            graph["ETAWAH"] = {{"KANNAUJ", 78}, {"BURARI", 180},{"VADODARA",90}};
+            graph["AMRITSAR"] = {{"GURGAON", 190}};
+            graph["GWALIOR"] = {{"GHAZIABAD",330},{"GURGAON",50},{"ALIGARH",60}};
+            graph["JHANSI"] = {{"GURGAON", 70}, {"FARIDABAD", 150}};
+            graph["VADODARA"] = {{"ALIGARH", 130}, {"FARIDABAD", 80},{"ETAWAH",90}};
+            graph["BURARI"] = {{"FARIDABAD", 250}, {"ETAWAH", 180}};
+            cout<<endl;
+            int f=shhort(graph,src,dest,speed,final2);
+            if(f>0)
+            {
+                cout<<endl;
+                cout<<"And The distance is: "<<f<<" Km"<<endl<<endl;
+            }
+            else
+            {
+                cout<<"\nShortest Path: "<<f<<endl<<endl;
+            }
+           // system("pause");
+            //system("cls");
+            goto label;
+        }
+        case 3:
+        {
+            cout<<"Thanks for using us!! We expect your revisit Soon."<<endl<<endl;
+            break;
+        }
+        default:
+            cout<<"Please Enter valid Option"<<endl<<endl;
+            //system("pause");
+            //system("cls");
+            goto label;
+
+        }
+    }
+    else
+    {
+        cout<<"Please Enter valid speed"<<endl;
+
+    }
+    return 0;
+}
