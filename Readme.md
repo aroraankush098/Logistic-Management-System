@@ -1,0 +1,5 @@
+- Developed a Logistic Management System utilizing Dijkstra's Algorithm to calculate the shortest distance and the shortest time path based on source and destination inputs.
+- Implemented a user-friendly interface to input source and destination information for efficient navigation planning
+- Improved logistics operations by enabling accurate distance calculations and optimized route planning
+- Streamlined transportation processes by providing the most efficient route options, resulting in time and cost savings
+- Demonstrated problem-solving skills by designing and implementing a complex algorithm to solve logistics challenges effectively
